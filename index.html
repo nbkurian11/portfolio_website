@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Noel, full-stack developer and CS student at York University.">
+<title>Noel's Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    color-scheme: dark;
+    --bg: #0a110d;
+    --surface: #111b15;
+    --surface-2: #16241c;
+    --line: #22362a;
+    --text: #e6eee8;
+    --muted: #93a99b;
+    --green: #3fbf73;
+    --green-deep: #1d6b3f;
+    --green-soft: rgba(63, 191, 115, 0.12);
+    --steel: #c9d4cd;
+    --display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+    --body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; animation: none !important; } }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 16px/1.65 var(--body);
+    padding-inline: 20px;
+  }
+  a { color: var(--green); text-decoration: none; }
+  a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  :focus-visible { outline: 2px solid var(--green); outline-offset: 3px; border-radius: 4px; }
+  .wrap { max-width: 1040px; margin: 0 auto; }
+
+  /* Header */
+  header.top {
+    position: sticky; top: env(safe-area-inset-top, 0px); z-index: 10;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+    margin-inline: -20px; padding-inline: 20px;
+  }
+  .top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 14px; }
+  .mark { font-family: var(--display); font-weight: 800; font-size: 18px; color: var(--text); letter-spacing: -0.01em; }
+  .mark span { color: var(--green); }
+  nav { display: flex; gap: 20px; flex-wrap: wrap; font-size: 14px; }
+  nav a { color: var(--muted); }
+  nav a:hover { color: var(--text); text-decoration: none; }
+
+  /* Hero */
+  .hero { position: relative; padding-block: 88px 72px; overflow: hidden; }
+  .slashes { position: absolute; inset: 0; pointer-events: none; }
+  .slashes i {
+    position: absolute; top: -20%; height: 140%; width: 2px;
+    background: linear-gradient(to bottom, transparent, var(--green) 45%, transparent);
+    transform: rotate(28deg); opacity: 0.35;
+  }
+  .slashes i:nth-child(1) { right: 22%; }
+  .slashes i:nth-child(2) { right: 17%; opacity: 0.55; width: 3px; }
+  .slashes i:nth-child(3) { right: 12%; }
+  .hero .wrap { position: relative; }
+  .eyebrow { font-family: var(--mono); font-size: 13px; color: var(--green); letter-spacing: 0.08em; text-transform: uppercase; }
+  h1 {
+    font-family: var(--display); font-weight: 800;
+    font-size: clamp(48px, 9vw, 96px); line-height: 0.95; letter-spacing: -0.035em;
+    margin: 14px 0 22px; text-wrap: balance;
+  }
+  h1 em { font-style: normal; color: var(--green); }
+  .lede { font-size: clamp(17px, 2.2vw, 20px); color: var(--steel); max-width: 60ch; margin: 0 0 32px; }
+  .actions { display: flex; flex-wrap: wrap; gap: 12px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 11px 18px; border-radius: 6px; font-weight: 600; font-size: 15px;
+    border: 1px solid var(--line); color: var(--text); background: var(--surface);
+  }
+  .btn:hover { text-decoration: none; border-color: var(--green); }
+  .btn.primary { background: var(--green); color: #06120b; border-color: var(--green); }
+  .btn.primary:hover { background: #52d184; }
+  .facts { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-top: 36px; font-size: 14px; color: var(--muted); }
+  .facts b { color: var(--text); font-weight: 500; }
+
+  /* Sections */
+  section.block { padding-block: 64px; border-top: 1px solid var(--line); }
+  .head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 32px; }
+  h2 { font-family: var(--display); font-weight: 700; font-size: clamp(28px, 4vw, 40px); letter-spacing: -0.02em; margin: 0; }
+  .head p { margin: 0; color: var(--muted); font-size: 15px; }
+
+  /* Projects */
+  .projects { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+  .card {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 10px;
+    padding: 24px; display: flex; flex-direction: column; gap: 14px;
+    transition: border-color .2s, transform .2s;
+  }
+  .card:hover { border-color: var(--green-deep); transform: translateY(-2px); }
+  .card-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .card h3 { font-family: var(--display); font-size: 24px; font-weight: 700; margin: 0; letter-spacing: -0.01em; }
+  .status { font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; padding: 3px 9px; border-radius: 999px; white-space: nowrap; }
+  .status.live { background: var(--green-soft); color: var(--green); }
+  .status.wip { background: rgba(214, 180, 90, 0.12); color: #d6b45a; }
+  .card p { margin: 0; color: var(--steel); font-size: 15px; }
+  .card ul { margin: 0; padding-left: 18px; color: var(--muted); font-size: 14px; display: grid; gap: 4px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; padding-top: 6px; }
+  .tag { font-family: var(--mono); font-size: 12px; color: var(--steel); background: var(--surface-2); border: 1px solid var(--line); border-radius: 4px; padding: 2px 8px; }
+
+  /* Experience */
+  .timeline { display: grid; gap: 0; }
+  .job { display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 28px; padding-block: 26px; border-bottom: 1px dashed var(--line); }
+  .job:last-child { border-bottom: 0; }
+  .when { font-family: var(--mono); font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .when .where { display: block; margin-top: 4px; }
+  .job h3 { margin: 0; font-size: 19px; font-weight: 600; }
+  .job .org { color: var(--green); font-weight: 500; margin: 2px 0 10px; }
+  .job ul { margin: 0; padding-left: 18px; color: var(--steel); display: grid; gap: 6px; font-size: 15px; }
+
+  /* Skills */
+  .skills { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+  .skill-group h3 { font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); font-weight: 500; margin: 0 0 12px; }
+  .skill-group .tags { margin: 0; padding: 0; }
+  .edu { margin-top: 36px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 22px 24px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px 24px; }
+  .edu h3 { margin: 0; font-size: 18px; }
+  .edu p { margin: 4px 0 0; color: var(--muted); font-size: 14px; }
+  .edu .when { align-self: center; }
+
+  /* Contact */
+  .contact { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; }
+  .email { font-family: var(--mono); font-size: clamp(16px, 2.6vw, 22px); color: var(--text); user-select: all; word-break: break-all; }
+  .copy { font: 500 14px var(--body); cursor: pointer; }
+  footer { padding-block: 32px 48px; color: var(--muted); font-size: 13px; border-top: 1px solid var(--line); }
+
+  @media (max-width: 760px) {
+    .projects, .skills { grid-template-columns: minmax(0, 1fr); }
+    .job { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+    nav { gap: 14px; }
+    .hero { padding-block: 56px 48px; }
+    .slashes { opacity: 0.6; }
+  }
+  @media (max-width: 440px) { nav a.hide-sm { display: none; } }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="mark" href="#top">noel<span>.</span></a>
+    <nav aria-label="Sections">
+      <a href="#projects">Projects</a>
+      <a href="#experience">Experience</a>
+      <a class="hide-sm" href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="slashes" aria-hidden="true"><i></i><i></i><i></i></div>
+    <div class="wrap">
+      <div class="eyebrow">CS @ York University · Toronto</div>
+      <h1>Hi, I'm Noel.<br><em>Full-stack</em> developer.</h1>
+      <p class="lede">I build web apps end to end, from React and Next.js frontends to Flask and ASP.NET APIs. Recently shipped a food safety platform for a client, and I'm currently building a platform that teaches object-oriented programming.</p>
+      <div class="actions">
+        <a class="btn primary" href="#projects">See my work</a>
+        <a class="btn" href="https://github.com/nbkurian11">GitHub</a>
+        <a class="btn" href="https://linkedin.com/in/noelku">LinkedIn</a>
+      </div>
+      <div class="facts">
+        <span><b>Graduating</b> Dec 2027</span>
+        <span><b>Open to</b> internships &amp; co-op</span>
+        <span><b>Based in</b> Toronto, ON</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="projects">
+    <div class="wrap">
+      <div class="head">
+        <h2>Projects</h2>
+        <p>Full stack, built and deployed</p>
+      </div>
+      <div class="projects">
+        <article class="card">
+          <div class="card-top"><h3>CourtVision</h3><span class="status live">Shipped</span></div>
+          <p>An NBA dashboard for searching players, comparing stats, and checking recent game scores.</p>
+          <ul>
+            <li>React frontend with player cards, team details and Chart.js stat comparisons</li>
+            <li>ASP.NET Core proxy keeps the third-party API key out of the browser</li>
+          </ul>
+          <div class="tags"><span class="tag">React</span><span class="tag">C#</span><span class="tag">ASP.NET Core</span><span class="tag">Chart.js</span><span class="tag">Tailwind</span></div>
+        </article>
+        <article class="card">
+          <div class="card-top"><h3>LearnOOP</h3><span class="status wip">In progress</span></div>
+          <p>A learning platform that teaches object-oriented programming through lessons and in-browser Java exercises.</p>
+          <ul>
+            <li>Supabase Auth with per-user progress tracking in PostgreSQL</li>
+            <li>Monaco Editor for writing Java right inside each lesson</li>
+          </ul>
+          <div class="tags"><span class="tag">React</span><span class="tag">Node.js</span><span class="tag">Supabase</span><span class="tag">PostgreSQL</span></div>
+        </article>
+        <article class="card">
+          <div class="card-top"><h3>ZeroDay</h3><span class="status live">Shipped</span></div>
+          <p>A debt tracker that helps people plan and monitor paying off what they owe.</p>
+          <ul>
+            <li>Payoff calculator using the avalanche method (highest interest first)</li>
+            <li>REST API backend with a frontend that updates in real time</li>
+          </ul>
+          <div class="tags"><span class="tag">Python</span><span class="tag">Flask</span><span class="tag">SQLite</span><span class="tag">JavaScript</span></div>
+        </article>
+        <article class="card">
+          <div class="card-top"><h3>Stocks API</h3><span class="status live">Shipped</span></div>
+          <p>A REST API that fetches live stock prices from Alpha Vantage and returns clean JSON.</p>
+          <ul>
+            <li>Transforms raw market data into a consistent response shape</li>
+            <li>Error handling with the right HTTP status codes</li>
+          </ul>
+          <div class="tags"><span class="tag">Python</span><span class="tag">Flask</span><span class="tag">REST</span><span class="tag">JavaScript</span></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="experience">
+    <div class="wrap">
+      <div class="head"><h2>Experience</h2></div>
+      <div class="timeline">
+        <div class="job">
+          <div class="when">Feb – Mar 2026<span class="where">Remote</span></div>
+          <div>
+            <h3>Software Developer (Contract)</h3>
+            <div class="org">One More Cocoa</div>
+            <ul>
+              <li>Built and deployed a food safety management platform with 10 modules, including suppliers, production lots, HACCP plans, recipes and audits (Next.js, TypeScript, Tailwind)</li>
+              <li>Built live KPI dashboards so supervisors could triage overdue tasks and trace affected lots without pulling reports</li>
+              <li>Implemented compliance workflows: recall tracking, temperature monitoring, critical control points and receiving log audits</li>
+            </ul>
+          </div>
+        </div>
+        <div class="job">
+          <div class="when">May – Aug 2026<span class="where">Markham, ON</span></div>
+          <div>
+            <h3>Research Assistant</h3>
+            <div class="org">Lassonde School of Engineering</div>
+            <ul>
+              <li>Helped develop AR, VR and AI-driven learning tools and compared how well each one worked</li>
+              <li>Wrote Python assessment questions to evaluate first-year students' grasp of core concepts</li>
+              <li>Collected and analyzed user study data on learning outcomes and usability</li>
+            </ul>
+          </div>
+        </div>
+        <div class="job">
+          <div class="when">Sept 2025 – Aug 2026<span class="where">Brampton, ON</span></div>
+          <div>
+            <h3>Programming Instructor</h3>
+            <div class="org">Ultimate Coders</div>
+            <ul>
+              <li>Taught 10–15 students a week in Python, HTML/CSS, Arduino and Scratch</li>
+              <li>Mentored students one on one through hands-on projects</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="skills">
+    <div class="wrap">
+      <div class="head"><h2>Skills</h2></div>
+      <div class="skills">
+        <div class="skill-group">
+          <h3>Languages</h3>
+          <div class="tags"><span class="tag">Python</span><span class="tag">Java</span><span class="tag">TypeScript</span><span class="tag">JavaScript</span><span class="tag">C</span><span class="tag">C#</span><span class="tag">SQL</span><span class="tag">HTML/CSS</span></div>
+        </div>
+        <div class="skill-group">
+          <h3>Frameworks &amp; data</h3>
+          <div class="tags"><span class="tag">React</span><span class="tag">Next.js</span><span class="tag">Node.js</span><span class="tag">Flask</span><span class="tag">ASP.NET Core</span><span class="tag">Tailwind</span><span class="tag">PostgreSQL</span><span class="tag">SQLite</span><span class="tag">Supabase</span></div>
+        </div>
+        <div class="skill-group">
+          <h3>Tools</h3>
+          <div class="tags"><span class="tag">Git</span><span class="tag">Bash</span><span class="tag">GitHub Copilot</span><span class="tag">Claude</span><span class="tag">Codex</span></div>
+        </div>
+      </div>
+      <div class="edu">
+        <div>
+          <h3>B.Sc. Specialized Honours, Computer Science</h3>
+          <p>York University · OOP, Data Structures, Software Tools (C &amp; Bash), Databases</p>
+        </div>
+        <div class="when">Expected Dec 2027</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="contact">
+    <div class="wrap">
+      <div class="head">
+        <h2>Let's talk</h2>
+        <p>Looking for internships and co-op roles</p>
+      </div>
+      <div class="contact">
+        <span class="email" id="email">nbkurian11@gmail.com</span>
+        <button class="btn copy" id="copy-btn" type="button">Copy email</button>
+        <a class="btn" href="https://linkedin.com/in/noelku">LinkedIn</a>
+        <a class="btn" href="https://github.com/nbkurian11">GitHub</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">© 2026 Noel · Toronto</div>
+</footer>
+
+<script>
+  const btn = document.getElementById('copy-btn');
+  btn.addEventListener('click', () => {
+    const text = document.getElementById('email').textContent;
+    const done = () => { btn.textContent = 'Copied'; setTimeout(() => btn.textContent = 'Copy email', 1800); };
+    const fallback = () => {
+      const r = document.createRange(); r.selectNodeContents(document.getElementById('email'));
+      const s = getSelection(); s.removeAllRanges(); s.addRange(r);
+      btn.textContent = 'Selected, press Ctrl+C';
+    };
+    try { navigator.clipboard.writeText(text).then(done, fallback); } catch (e) { fallback(); }
+  });
+</script>
+</body>
+</html>
